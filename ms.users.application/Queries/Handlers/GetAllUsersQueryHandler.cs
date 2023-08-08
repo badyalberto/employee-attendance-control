@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace ms.users.application.Queries.Handlers
 {
-    public class GetAllUserQueryHandler : IRequestHandler<GetAllUsersQuery, IEnumerable<UserResponse>>
+    public class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersQuery, IEnumerable<UserResponse>>
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
-        public GetAllUserQueryHandler(IUserRepository userRepository,IMapper mapper)
+        public GetAllUsersQueryHandler(IUserRepository userRepository,IMapper mapper)
         {
             _userRepository = userRepository;
             _mapper = mapper;
