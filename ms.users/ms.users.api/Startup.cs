@@ -46,8 +46,8 @@ namespace ms.users.api
 
             services.AddSingleton(typeof(CassandraUserMapping));
             services.AddScoped(typeof(CassandraCluster));
-            services.AddScoped(typeof(IUsersContext), typeof(UsersContext));
-            services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
+            services.AddScoped<IUsersContext, UsersContext>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
 
             var automapperConfig = new MapperConfiguration(mapperConfig =>
@@ -118,12 +118,13 @@ namespace ms.users.api
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ms.users.api v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Users Authentication V1"));
             }
 
             app.UseHttpsRedirection();

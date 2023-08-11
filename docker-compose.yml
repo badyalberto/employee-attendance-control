@@ -5,7 +5,7 @@ services:
     image: cassandra
 
   ms.users.api:
-    image: ${DOCKER_REGISTRY-}msusersapi
+    image: ${DOCKER_REGISTRY-}msusers
     build:
       context: .
-      dockerfile: ms.users.api/Dockerfile
+      dockerfile: ms.users/ms.users.api/Dockerfile

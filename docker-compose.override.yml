@@ -8,12 +8,13 @@ services:
       - /Docker/MicroServices/Cassandra:/var/lib/cassandra
     ports:
       - "9042:9042"
+
   ms.users.api:
     container_name: ms.users.api
     restart: always
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "DatabaseSettings:Hostname=ms.cassandra.db"
+      - DatabaseSettings__Hostname=ms.cassandra.db
     ports:
       - "9000:80"
     depends_on:

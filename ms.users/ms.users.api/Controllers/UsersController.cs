@@ -21,6 +21,8 @@ namespace ms.users.api.Controllers
         [Route("[action]")]
         public async Task<IActionResult> GetAllUsers() => Ok(await _mediator.Send(new GetAllUsersQuery()));
 
+        [HttpPost]
+        [Route("[action]")]
         public async Task<IActionResult> CreateAccount([FromBody] AccountRequest account) =>
             Ok(await _mediator.Send(new CreateUserAccountCommand(account.UserName,account.Password,account.Role)));
 

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ms.users.infrastructure.Data
 {
-    public class UsersContext
+    public class UsersContext : IUsersContext
     {
         private IMapper _usersMapper { get; set; }
         private CassandraUserMapping _cassandraUserMapping { get; set; }

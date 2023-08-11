@@ -5,13 +5,13 @@ VisualStudioVersion = 17.6.33801.468
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ms.users", "ms.users", "{76678661-56C2-4532-AF96-416F125C1204}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ms.users.api", "ms.users.api\ms.users.api.csproj", "{4941DAA6-7430-4219-B5DF-A43508CC7B90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ms.users.api", "ms.users\ms.users.api\ms.users.api.csproj", "{4941DAA6-7430-4219-B5DF-A43508CC7B90}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ms.users.application", "ms.users.application\ms.users.application.csproj", "{41D0AC0D-DEAB-4932-B79B-BB944F906758}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ms.users.application", "ms.users\ms.users.application\ms.users.application.csproj", "{41D0AC0D-DEAB-4932-B79B-BB944F906758}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ms.users.domain", "ms.users.domain\ms.users.domain.csproj", "{C40FB034-41B2-4911-833B-706CE00E908C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ms.users.domain", "ms.users\ms.users.domain\ms.users.domain.csproj", "{C40FB034-41B2-4911-833B-706CE00E908C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ms.users.infrastructure", "ms.users.infrastructure\ms.users.infrastructure.csproj", "{84E23162-F587-4DA1-BEDF-9FC3871039AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ms.users.infrastructure", "ms.users\ms.users.infrastructure\ms.users.infrastructure.csproj", "{84E23162-F587-4DA1-BEDF-9FC3871039AE}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{0B998616-B8F5-44BD-BD65-28A0C757169A}"
 EndProject
