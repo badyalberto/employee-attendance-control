@@ -9,3 +9,6 @@ services:
     build:
       context: .
       dockerfile: ms.users/ms.users.api/Dockerfile
+
+  ms.sql.employees.db:
+    image: mcr.microsoft.com/mssql/server   
