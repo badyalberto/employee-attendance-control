@@ -1,13 +1,13 @@
-﻿using ms.employees.application.Entities;
+﻿using ms.employees.domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ms.employees.application.Repositories
+namespace ms.employees.domain.Repositories
 {
-    public interface IEmploteeRepository
+    public interface IEmployeeRepository
     {
         Task<List<Employee>> GetAllEmployees();
         Task<string> UpdateAttendanceStateEmployee(string userName, bool attendance, string notes);

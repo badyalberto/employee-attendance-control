@@ -1,6 +1,6 @@
 ﻿using Dapper;
-using ms.employees.application.Entities;
-using ms.employees.application.Repositories;
+using ms.employees.domain.Entities;
+using ms.employees.domain.Repositories;
 using ms.employees.infrastructure.Data;
 using ms.employees.infrastructure.SQLData;
 using System;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ms.employees.infrastructure.Repositories
 {
-    public class EmployeeRepository : IEmploteeRepository
+    public class EmployeeRepository : IEmployeeRepository
     {
         private IDapperContext _employeeContext;
 
