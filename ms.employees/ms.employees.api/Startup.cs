@@ -77,7 +77,7 @@ namespace ms.employees.api
 
             services.AddSwaggerGen(swagger =>
             {
-                swagger.SwaggerDoc("v1", new OpenApiInfo
+                swagger.SwaggerDoc("v1.1", new OpenApiInfo
                 {
                     Title = "Employees Attendance Api",
                     Version = "v1"

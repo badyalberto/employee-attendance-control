@@ -18,9 +18,9 @@ namespace ms.employees.infrastructure.Data
 
         public EmployeesDapperContext(IConfiguration configuration)
         {
-            _connectionString = $"Data Source={configuration.GetConnectionString("EmployeeDB:HostName")};" +
-                                $"Initial Catalog={configuration.GetConnectionString("EmployeeDB:Catalogue")};" +
-                                $"User ID={configuration.GetConnectionString("EmployeeDB:User")};" +
+            _connectionString = $"Server={configuration.GetConnectionString("EmployeeDB:HostName")};" +
+                                $"Database={configuration.GetConnectionString("EmployeeDB:Catalogue")};" +
+                                $"User Id={configuration.GetConnectionString("EmployeeDB:User")};" +
                                 $"Password={configuration.GetConnectionString("EmployeeDB:Password")};" +
                                 $"MultipleActiveResultSets=True;";
         }
