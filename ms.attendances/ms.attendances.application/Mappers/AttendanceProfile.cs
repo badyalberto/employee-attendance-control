@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace ms.attendances.application.Mappers
 {
-    public class AttendanceMapperProfile : Profile
+    public class AttendanceProfile : Profile
     {
-        public AttendanceMapperProfile() { 
+        public AttendanceProfile() { 
             CreateMap<AttendanceRecord,AttendanceResponse>().ReverseMap();
             CreateMap<AttendanceRecord,CreateAttendanceRequest>().ReverseMap();
 

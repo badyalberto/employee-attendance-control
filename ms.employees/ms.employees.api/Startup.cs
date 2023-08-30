@@ -114,7 +114,7 @@ namespace ms.employees.api
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ms.employees.api v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Employees Attendance API V1"));
             }
 
             app.UseHttpsRedirection();
