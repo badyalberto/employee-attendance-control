@@ -23,9 +23,13 @@ namespace ms.attendances.api.Controllers
             _mediator = mediator;
         }
 
+        [HttpGet]
+        [Route("[action]")]
         public async Task<IActionResult> GetAllAttendances(string userName)
             => Ok(await _mediator.Send(new GetAllAttendancesQuery(userName)));
 
+        [HttpPost]
+        [Route("[action]")]
         public async Task<IActionResult> CreateAttendance([FromBody] CreateAttendanceRequest createAttendanceRequest)
         {
             var userName = User.Claims.FirstOrDefault(

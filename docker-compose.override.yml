@@ -43,4 +43,26 @@ services:
       - "9010:80"
     depends_on:
       - ms.sql.employees.db
+
+  ms.mongo.attendance.db:
+    container_name: ms.mongo.attendance.db
+    restart: always
+    volumes:
+      - /Docker/MicroServices/Mongo:/data/db
+    ports:
+      - "27017:27017"
+
+  ms.attendances.api:
+    container_name: ms.attendances.api
+    environment:
+      - APSNETCORE_ENVIORAMENT=Development
+      - ConnectionStrings__Attendance__Hostname=ms.mongo.employees.db
+      - ConnectionStrings__Attendance__DataBase=DbHistoricalAttendance
+      - ConnectionStrings__Attendance__Collection=Attendances
+      - ConnectionStrings__Attendance__Port=27017
+    ports:
+      - "9020:80"
+    depends_on:
+      - ms.mongo.attendance.db
+
     
