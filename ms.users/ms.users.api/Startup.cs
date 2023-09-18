@@ -12,6 +12,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using ms.rabbitmq.Consumers;
+using ms.rabbitmq.Middlewares;
+using ms.users.api.Consumers;
+using ms.users.api.Mappers;
 using ms.users.application.Mappers;
 using ms.users.application.Queries.Handlers;
 using ms.users.domain.Interfaces;
@@ -46,18 +50,27 @@ namespace ms.users.api
 
             services.AddSingleton(typeof(CassandraUserMapping));
             services.AddScoped(typeof(CassandraCluster));
+            services.AddTransient(typeof(CassandraCluster));
+
             services.AddScoped<IUsersContext, UsersContext>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddTransient<IUsersContext, UsersContext>();
+            services.AddTransient<IUserRepository, UserRepository>();
 
 
             var automapperConfig = new MapperConfiguration(mapperConfig =>
-            { mapperConfig.AddMaps(typeof(UsersMapperProfile).Assembly); });
+            { 
+                mapperConfig.AddMaps(typeof(UsersMapperProfile).Assembly);
+                mapperConfig.AddProfile(typeof(EventMapperProfile));
+            });
 
             IMapper mapper = automapperConfig.CreateMapper();
 
             services.AddSingleton(mapper);
 
             services.AddMediatR(typeof(GetAllUsersQueryHandler).GetTypeInfo().Assembly);
+
+            services.AddSingleton(typeof(IConsumer),typeof(UsersConsumer));
 
             var privateKey = Configuration.GetValue<string>("Authentication:JWT:Key");
 
@@ -117,7 +130,7 @@ namespace ms.users.api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,IConsumer consumer)
         
         {
             if (env.IsDevelopment())
@@ -138,6 +151,8 @@ namespace ms.users.api
             {
                 endpoints.MapControllers();
             });
+
+            app.UseRabbitConsumer(consumer);
 
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Users Authentication API V1"));
