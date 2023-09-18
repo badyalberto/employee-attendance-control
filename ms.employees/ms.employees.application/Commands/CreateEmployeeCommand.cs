@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 
 namespace ms.employees.application.Commands
 {
-    public record CreateEmployeeCommand(string UserName,string FirstName, string LastName) : IRequest<string>;
+    public record CreateEmployeeCommand(string UserName,string FirstName, string LastName,string password, string Role) : IRequest<string>;
 }

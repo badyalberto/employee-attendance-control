@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using ms.employees.application.Commands;
 using ms.employees.application.Responses;
 using ms.employees.domain.Entities;
+using ms.rabbitmq.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,11 @@ namespace ms.employees.application.Mappers
 {
     public class EmployeesMapperProfile : Profile
     {
-        public EmployeesMapperProfile() => 
-            CreateMap<Employee,EmployeeResponse>().ReverseMap();
+        public EmployeesMapperProfile()
+        {
+            CreateMap<Employee, EmployeeResponse>().ReverseMap();
+            CreateMap<CreateEmployeeCommand, EmployeeCreateEvent>().ReverseMap();
+        }
+           
     }
 }

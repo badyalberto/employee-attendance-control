@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace ms.employees.application.Requests
+namespace ms.rabbitmq.Events
 {
-    public class CreateEmployeeRequest
+    public class EmployeeCreateEvent : IRabbitMqEvent
     {
+        public Guid MyProperty => Guid.NewGuid();
         public string UserName { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
         public string Password { get; set; }
         public string Role { get; set; }
+
+        public string Serialize() => JsonSerializer.Serialize(this);
+        
     }
 }

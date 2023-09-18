@@ -14,11 +14,17 @@ namespace ms.attendances.infrastructure.Data
         private readonly IConfiguration _configuration;
         private IMongoDatabase _mongoDatabase;
 
-        public AttendanceMongoContext(IConfiguration configuration, IMongoDatabase mongoDatabase)
+        public AttendanceMongoContext(IConfiguration configuration)
         {
             _configuration = configuration;
-            _mongoDatabase = new MongoClient(String.Concat("mongodb://", configuration.GetConnectionString("Attendance:HostName"), ":", configuration.GetConnectionString("Attendance:Port")))
-                .GetDatabase(configuration.GetConnectionString("Attendance:DataBase"));
+            var bd = String.Concat( "mongodb://", configuration.GetConnectionString("Attendance:HostName"),
+                                               ":", configuration.GetConnectionString("Attendance:Port"));
+            //_mongoDatabase = new MongoClient("mongodb://mongo:27017").GetDatabase("DbHistoricalAttendance");
+
+            _mongoDatabase = new MongoClient(String.Concat(
+                                               "mongodb://", configuration.GetConnectionString("Attendance:HostName"),
+                                               ":", configuration.GetConnectionString("Attendance:Port"))
+                                           ).GetDatabase(configuration.GetConnectionString("Attendance:DataBase"));
         }
 
         public IMongoCollection<AttendanceMongo> AttendanceCollection =>

@@ -9,13 +9,12 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ms.attendances.application.Command.Handlers
+namespace ms.attendances.application.Commands.Handlers
 {
-    public class CreateAttendanceCommandHandler : IRequestHandler<CreateAttendanceCommand,bool>
+    public class CreateAttendanceCommandHandler : IRequestHandler<CreateAttendanceCommand, bool>
     {
         private readonly IAttendanceRepository _attendanceRepository;
         private readonly IMapper _mapper;
-
         public CreateAttendanceCommandHandler(IAttendanceRepository attendanceRepository, IMapper mapper)
         {
             _attendanceRepository = attendanceRepository;
@@ -24,7 +23,8 @@ namespace ms.attendances.application.Command.Handlers
 
         public async Task<bool> Handle(CreateAttendanceCommand request, CancellationToken cancellationToken)
         {
-            var attendanceRecord = _mapper.Map<AttendanceRecord>(request.AttendaceRequest);
+            var attendanceRecord = _mapper.Map<AttendanceRecord>(request.AttendanceRequest);
+
             attendanceRecord.UserName = request.UserName;
 
             return await _attendanceRepository.CreateAttendance(attendanceRecord);

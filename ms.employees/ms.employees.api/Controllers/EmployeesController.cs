@@ -30,7 +30,7 @@ namespace ms.employees.api.Controllers
         [HttpPost]
         [Route("[action]")]
         public async Task<IActionResult> CreateEmployee([FromBody] CreateEmployeeRequest employee) =>
-            Ok(await _mediator.Send(new CreateEmployeeCommand(employee.UserName,employee.FirstName,employee.LastName)));
+            Ok(await _mediator.Send(new CreateEmployeeCommand(employee.UserName,employee.FirstName,employee.LastName,employee.Password, employee.Role)));
 
         [Authorize]
         [HttpPut]

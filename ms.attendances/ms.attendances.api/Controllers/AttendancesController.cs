@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ms.attendances.application.Command;
+using ms.attendances.application.Commands;
 using ms.attendances.application.Queries;
 using ms.attendances.application.Request;
 using System.Linq;

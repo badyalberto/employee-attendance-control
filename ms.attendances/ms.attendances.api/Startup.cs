@@ -7,19 +7,22 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using ms.attendances.application.Command;
+using ms.attendances.application.Commands;
 using ms.attendances.application.Mappers;
 using ms.attendances.domain.Repositories;
 using ms.attendances.infrastructure.Data;
-using ms.attendances.infrastructure.MongoEntities;
+using ms.attendances.infrastructure.HealthChecks;
+using ms.attendances.infrastructure.Mappers;
 using ms.attendances.infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -40,6 +43,9 @@ namespace ms.attendances.api
 
             services.AddControllers();
 
+            services.AddHealthChecks()
+                .AddCheck<MongoDbHealthCheck>("Mongo");
+
             services.AddScoped(typeof(IAttendanceContext), typeof(AttendanceMongoContext));
             services.AddScoped(typeof(IAttendanceRepository), typeof(AttendanceRepository));
 
@@ -52,7 +58,7 @@ namespace ms.attendances.api
             IMapper mapper = automapperConfig.CreateMapper();
             services.AddSingleton(mapper);
 
-            services.AddMediatR(typeof(CreateAttendanceCommand).Assembly);
+            services.AddMediatR(typeof(CreateAttendanceCommand).GetTypeInfo().Assembly);
 
             var privateKey = Configuration.GetValue<string>("Authentication:JWT:Key");
 
@@ -122,6 +128,7 @@ namespace ms.attendances.api
                 endpoints.MapControllers();
             });
 
+            app.UseHealthChecks("/health");
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json","Historical Attendance API V1"));
         }
