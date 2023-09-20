@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 
 namespace ms.employees.application.Commands
 {
-    public record UpdateAttendanceStateCommand(string UserName,bool Attendance, string Notes) : IRequest<string>;
+    public record UpdateAttendanceStateCommand(string UserName,bool Attendance, string Notes,string token) : IRequest<string>;
 }

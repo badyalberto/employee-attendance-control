@@ -11,12 +11,14 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using ms.employees.application.HttpCommunications;
 using ms.employees.application.Mappers;
 using ms.employees.application.Queries;
 using ms.employees.domain.Repositories;
 using ms.employees.infrastructure.Data;
 using ms.employees.infrastructure.Repositories;
 using ms.rabbitmq.Producers;
+using Refit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,6 +53,10 @@ namespace ms.employees.api
             services.AddSingleton(mapper);
 
             services.AddMediatR(typeof(GetAllEmployeeQuery).GetTypeInfo().Assembly);
+
+            services.AddRefitClient<IAttendanceApiCommunication>()
+                .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("Communication:External:AttendanceApiUrl").Value));
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ms.employees.api", Version = "v1" });

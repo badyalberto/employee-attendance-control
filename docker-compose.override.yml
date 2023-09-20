@@ -66,4 +66,8 @@ services:
     depends_on:
       - ms.mongo.attendance.db
 
+networks:
+  attendanceNetwork:
+    driver: bridge
+
     

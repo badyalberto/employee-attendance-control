@@ -39,7 +39,7 @@ namespace ms.employees.api.Controllers
         {
             var userName = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier)?.Value;
 
-            return Ok(await _mediator.Send(new UpdateAttendanceStateCommand(userName,attendance,notes)));
+            return Ok(await _mediator.Send(new UpdateAttendanceStateCommand(userName,attendance,notes, Request.Headers["Authorization"].ToString())));
         }
     }
 }
