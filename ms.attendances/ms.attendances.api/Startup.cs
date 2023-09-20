@@ -12,6 +12,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using ms.attendances.api.Consumers;
+using ms.attendances.api.Mappers;
 using ms.attendances.application.Commands;
 using ms.attendances.application.Mappers;
 using ms.attendances.domain.Repositories;
@@ -19,6 +21,8 @@ using ms.attendances.infrastructure.Data;
 using ms.attendances.infrastructure.HealthChecks;
 using ms.attendances.infrastructure.Mappers;
 using ms.attendances.infrastructure.Repositories;
+using ms.rabbitmq.Middlewares;
+using ms.rabbitmq.Consumers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,18 +51,23 @@ namespace ms.attendances.api
                 .AddCheck<MongoDbHealthCheck>("Mongo");
 
             services.AddScoped(typeof(IAttendanceContext), typeof(AttendanceMongoContext));
+            services.AddTransient(typeof(IAttendanceContext),typeof(AttendanceMongoContext));
             services.AddScoped(typeof(IAttendanceRepository), typeof(AttendanceRepository));
+            services.AddTransient(typeof(IAttendanceRepository), typeof(AttendanceRepository));
 
             var automapperConfig = new MapperConfiguration(mapperConfig =>
             {
                 mapperConfig.AddMaps(typeof(AttendanceProfile).Assembly);
                 mapperConfig.AddMaps(typeof(AttendanceMongoProfile).Assembly);
+                mapperConfig.AddProfile(typeof(EventMapperProfile));
             });
 
             IMapper mapper = automapperConfig.CreateMapper();
             services.AddSingleton(mapper);
 
             services.AddMediatR(typeof(CreateAttendanceCommand).GetTypeInfo().Assembly);
+
+            services.AddSingleton(typeof(IConsumer),typeof(AttendancesConsumer));
 
             var privateKey = Configuration.GetValue<string>("Authentication:JWT:Key");
 
@@ -107,7 +116,7 @@ namespace ms.attendances.api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,IConsumer consumer)
         {
             if (env.IsDevelopment())
             {
@@ -129,6 +138,9 @@ namespace ms.attendances.api
             });
 
             app.UseHealthChecks("/health");
+
+            app.UseRabbitConsumer(consumer);
+
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json","Historical Attendance API V1"));
         }

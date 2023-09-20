@@ -14,7 +14,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ms.rabbitmq.Consumers;
 using ms.rabbitmq.Middlewares;
-using ms.rabbitmq.Producers;
 using ms.users.api.Consumers;
 using ms.users.api.Mappers;
 using ms.users.application.Mappers;
