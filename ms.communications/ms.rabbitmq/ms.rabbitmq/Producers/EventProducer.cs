@@ -1,22 +1,14 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Text;
 using ms.rabbitmq.Events;
 using RabbitMQ.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace ms.rabbitmq.Producers
 {
     public class EventProducer : IProducer
     {
         private readonly IConfiguration _configuration;
-
-        public EventProducer(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
+        public EventProducer(IConfiguration configuration) => _configuration = configuration;
 
         public void Produce(IRabbitMqEvent rabbitmqEvent)
         {
@@ -24,7 +16,6 @@ namespace ms.rabbitmq.Producers
             {
                 HostName = _configuration.GetValue<string>("Communication:EventBus:HostName")
             };
-
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {

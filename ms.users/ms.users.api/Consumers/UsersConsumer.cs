@@ -4,10 +4,10 @@ using MediatR;
 using ms.rabbitmq.Consumers;
 using RabbitMQ.Client;
 using ms.rabbitmq.Events;
-using RabbitMQ.Client.Events;
 using System.Text;
 using System.Text.Json;
 using ms.users.application.Commands;
+using RabbitMQ.Client.Events;
 
 namespace ms.users.api.Consumers
 {
@@ -18,10 +18,9 @@ namespace ms.users.api.Consumers
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
 
-        public UsersConsumer(IMediator mediator, IConnection connection, IMapper mapper, IConfiguration configuration)
+        public UsersConsumer(IMediator mediator, IMapper mapper, IConfiguration configuration)
         {
             _mediator = mediator;
-            _connection = connection;
             _mapper = mapper;
             _configuration = configuration;
         }
@@ -38,7 +37,7 @@ namespace ms.users.api.Consumers
 
             var queue = typeof(EmployeeCreateEvent).Name;
 
-            var consumer = new EventingBasicConsumer(channel);
+            var consumer = new EventingBasicConsumer(channel); //EventingBasicConsumer
             consumer.Received += RecievedEvent;
 
             channel.BasicConsume(queue: queue,autoAck: true, consumer: consumer);

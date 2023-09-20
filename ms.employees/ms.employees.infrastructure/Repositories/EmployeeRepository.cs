@@ -36,6 +36,14 @@ namespace ms.employees.infrastructure.Repositories
             return response?.ToList() ?? new List<Employee>();
         }
 
+        public Task<Employee> GetEmployee(string userName)
+        {
+            var res = _employeeContext.Connection.QueryFirstOrDefaultAsync<Employee>(EmployeeDataSQL.GetEmployee,
+                param: new { UserName = userName });
+
+            return res;
+        }
+
         public async Task<string> UpdateAttendanceStateEmployee(string userName, bool attendance, string notes)
         {
             var response = await _employeeContext.Connection.ExecuteAsync(EmployeeDataSQL.UpdateAttendanceState,param:

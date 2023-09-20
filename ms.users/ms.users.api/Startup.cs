@@ -14,6 +14,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ms.rabbitmq.Consumers;
 using ms.rabbitmq.Middlewares;
+using ms.rabbitmq.Producers;
 using ms.users.api.Consumers;
 using ms.users.api.Mappers;
 using ms.users.application.Mappers;
@@ -33,14 +34,12 @@ namespace ms.users.api
 {
     public class Startup
     {
+
+        public IConfiguration Configuration { get; }
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-
-
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -57,6 +56,7 @@ namespace ms.users.api
             services.AddTransient<IUsersContext, UsersContext>();
             services.AddTransient<IUserRepository, UserRepository>();
 
+            //services.AddTransient<IProducer, EventProducer>();
 
             var automapperConfig = new MapperConfiguration(mapperConfig =>
             { 

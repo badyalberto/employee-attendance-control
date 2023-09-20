@@ -113,7 +113,7 @@ namespace ms.attendances.api
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ms.attendances.api v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Historical Attendance API V1"));
             }
 
             app.UseHttpsRedirection();

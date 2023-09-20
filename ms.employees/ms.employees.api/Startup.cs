@@ -16,6 +16,7 @@ using ms.employees.application.Queries;
 using ms.employees.domain.Repositories;
 using ms.employees.infrastructure.Data;
 using ms.employees.infrastructure.Repositories;
+using ms.rabbitmq.Producers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,8 @@ namespace ms.employees.api
         {
 
             services.AddControllers();
+            services.AddScoped(typeof(IProducer), typeof(EventProducer));
+
             services.AddScoped(typeof(IDapperContext), typeof(EmployeesDapperContext));
             services.AddScoped(typeof(IEmployeeRepository), typeof(EmployeeRepository));
 
