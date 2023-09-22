@@ -15,10 +15,12 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - DatabaseSettings__Hostname=ms.cassandra.db
+      - Communication__EventBus__HostName=ms.rabbitmq.bus 
     ports:
       - "9000:80"
     depends_on:
       - ms.cassandra.db
+      - ms.rabbitmq.bus
 
   ms.sql.employees.db:
     container_name: ms.sql.employees.db
@@ -39,10 +41,14 @@ services:
       - ConnectionStrings__EmployeeDB__Catalogue=EmployeesAttendance
       - ConnectionStrings__EmployeeDB__User=sa
       - ConnectionStrings__EmployeeDB__Password=.123Pass456.
+      - Communication__EventBus__HostName=ms.rabbitmq.bus
+      - Communication__External__AttendanceApiUrl=http://ms.attendances.api:80
     ports:
       - "9010:80"
     depends_on:
       - ms.sql.employees.db
+      - ms.rabbitmq.bus
+      - ms.attendances.api
 
   ms.mongo.attendance.db:
     container_name: ms.mongo.attendance.db
@@ -61,13 +67,16 @@ services:
       - ConnectionStrings__Attendance__DataBase=DbHistoricalAttendance
       - ConnectionStrings__Attendance__Collection=Attendances
       - ConnectionStrings__Attendance__Port=27017
+      - Communication__EventBus__HostName=ms.rabbitmq.bus 
     ports:
       - "9020:80"
     depends_on:
       - ms.mongo.attendance.db
+      - ms.rabbitmq.bus
 
-networks:
-  attendanceNetwork:
-    driver: bridge
-
-    
+  ms.rabbitmq.bus:
+    container_name: ms.rabbitmq.bus
+    restart: always
+    ports:
+      - "15672:15672"
+      - "5672:5672"

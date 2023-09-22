@@ -37,6 +37,8 @@ namespace ms.users.api.Consumers
 
             var queue = typeof(EmployeeCreateEvent).Name;
 
+            channel.QueueDeclare(queue, durable: true, exclusive: false, autoDelete: false, null);
+
             var consumer = new EventingBasicConsumer(channel); //EventingBasicConsumer
             consumer.Received += RecievedEvent;
 
