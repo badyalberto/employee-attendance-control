@@ -20,11 +20,14 @@ namespace ms.employees.application.Commands.Handlers
         private readonly IMapper _mapper;
         private readonly IAttendanceApiCommunication _attendanceApiCommunication;
 
-        public UpdateAttendanceStateCommandHandler(IEmployeeRepository employeeRepository,IProducer producer,IMapper mapper)
+        public UpdateAttendanceStateCommandHandler(IEmployeeRepository employeeRepository,
+                                                    IProducer producer,IMapper mapper, 
+                                                    IAttendanceApiCommunication attendanceApiCommunication)
         {
             _employeeRepository = employeeRepository;
             _producer = producer;
             _mapper = mapper;
+            _attendanceApiCommunication = attendanceApiCommunication;
         }
 
         public async Task<string> Handle(UpdateAttendanceStateCommand request, CancellationToken cancellationToken)
@@ -35,7 +38,7 @@ namespace ms.employees.application.Commands.Handlers
 
             string notes = request.Notes == null ? $"[{numberOfAttendances} Asistencias]" : string.Concat(request.Notes, $"[{numberOfAttendances} Asistencias]");
 
-            var res = await _employeeRepository.UpdateAttendanceStateEmployee(request.UserName,request.Attendance,request.Notes);
+            var res = await _employeeRepository.UpdateAttendanceStateEmployee(request.UserName,request.Attendance,notes);
 
             var employee = await _employeeRepository.GetEmployee(request.UserName);
 

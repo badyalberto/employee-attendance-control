@@ -41,6 +41,8 @@ namespace ms.attendances.api.Consumers
 
             var consumer = new EventingBasicConsumer(channel);
             consumer.Received += RecievedEvent;
+
+            channel.BasicConsume(queue: queue, autoAck: true, consumer: consumer);
         }
 
         private async void RecievedEvent(object sender, BasicDeliverEventArgs e)
