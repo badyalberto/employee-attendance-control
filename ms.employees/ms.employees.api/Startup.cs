@@ -25,6 +25,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Treblle.Net.Core;
 
 namespace ms.employees.api
 {
@@ -114,6 +115,10 @@ namespace ms.employees.api
                     }
                 });
             });
+
+            services.AddTreblle(
+                    Configuration["Treblle:ApiKey"],
+                    Configuration["Treblle:ProjectId"]);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -140,6 +145,8 @@ namespace ms.employees.api
 
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json","Employees Attendance API V1"));
+
+            app.UseTreblle(useExceptionHandler: true);
         }
     }
 }

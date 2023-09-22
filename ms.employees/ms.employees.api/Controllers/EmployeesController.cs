@@ -7,6 +7,8 @@ using ms.employees.application.Requests;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Treblle.Net;
+using Treblle.Net.Core;
 
 namespace ms.employees.api.Controllers
 {
@@ -21,17 +23,20 @@ namespace ms.employees.api.Controllers
             _mediator = mediator;
         }
 
+        [Treblle]
         [Authorize(Roles = "admin")]
         [HttpGet]
         [Route("[action]")]
         public async Task<IActionResult> GetAllEmployees() => Ok(await _mediator.Send(new GetAllEmployeeQuery()));
 
+        [Treblle]
         [Authorize(Roles = "admin")]
         [HttpPost]
         [Route("[action]")]
         public async Task<IActionResult> CreateEmployee([FromBody] CreateEmployeeRequest employee) =>
             Ok(await _mediator.Send(new CreateEmployeeCommand(employee.UserName,employee.FirstName,employee.LastName,employee.Password, employee.Role)));
-
+        
+        [Treblle]
         [Authorize]
         [HttpPut]
         [Route("[action]/{attendance}")]

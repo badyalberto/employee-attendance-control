@@ -27,3 +27,6 @@ services:
     build:
       context: .
       dockerfile: ms.attendances/ms.attendances.api/Dockerfile
+
+  ms.rabbitmq.bus:
+    image: rabbitmq:3-management
